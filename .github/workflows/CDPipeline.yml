@@ -1,19 +1,17 @@
 name: CD
 
 on:
-	release:
+  release:
     types:
       published
 		
-
 jobs:
-	build:
-		runs-on: ubuntu-latest
+  publish:
+    runs-on: ubuntu-latest
+		
+    steps:
+      - uses: actions/checkout@v2
 
-
-		steps:
-			- uses: actions/checkout@v2
-
-			-name: action on release
-			 run: echo "this pipeline will be run when a version release deploy happened. so you can publish your product anywhere you want."
+      - name: action on release
+        run: echo "this pipeline will be run when a version release deploy happened. so you can publish your product anywhere you want."
 
