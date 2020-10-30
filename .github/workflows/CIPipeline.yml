@@ -2,8 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
-		
+    branches: [ main ]		
 
 jobs:
   build:
@@ -13,7 +12,4 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: run a one-line script
-        run: echo "you can run any script here on demand"
-
-      - name: a new script
-	run: echo "for example you can run your integeration tests here like:\n./manage.py test\nbut because we hav'nt code anything we can't run test now"
+        run: echo "you can run any script here on demand.\nfor example you can run your integeration tests here like:\n./manage.py test\nbut because we hav'nt code anything we can't run test now"
