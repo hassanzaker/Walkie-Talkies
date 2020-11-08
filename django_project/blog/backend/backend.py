@@ -49,5 +49,38 @@ def get_exams(classroom):
 
 
 def get_posts(forum):
-    return sorted(forum.posts_set.all(), key=lambda x: x.date_posted())
+    return sorted(forum.post_set.all(), key=lambda x: x.date_posted)
 
+
+def exam_belongs_to_classroom(classroom_id, exam_id):
+    return Exam.objects.get(id=exam_id).classroom.id == classroom_id
+
+
+def forum_belongs_to_classroom(classroom_id, forum_id):
+    return Forum.objects.get(id=forum_id).classroom.id == classroom_id
+
+
+def is_member_of_classroom(user, classroom_id):
+    return classroom_id in [classroom.id for classroom in get_classrooms(user)]
+
+
+def match(user=None, classroom_id=None, forum_id=None, exam_id=None):
+    ans = True
+    # return false if given ids are erroneous
+    try:
+        if classroom_id:
+            Classroom.objects.get(id=classroom_id)
+        if forum_id:
+            Forum.objects.get(id=forum_id)
+        if exam_id:
+            Exam.objects.get(id=exam_id)
+    except:
+        return False
+
+    if classroom_id and user:
+        ans = ans and is_member_of_classroom(user, classroom_id)
+    if classroom_id and forum_id:
+        ans = ans and forum_belongs_to_classroom(classroom_id, forum_id)
+    if classroom_id and exam_id:
+        ans = ans and exam_belongs_to_classroom(classroom_id, exam_id)
+    return ans

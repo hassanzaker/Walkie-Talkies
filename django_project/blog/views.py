@@ -18,18 +18,23 @@ def dashboard(request):
 
 
 @login_required()
-def classroom(request, id):
-    if id in [classroom.id for classroom in get_classrooms(request.user)]:
-        classroom = Classroom.objects.get(id=id)
+def classroom(request, classroom_id):
+    if match(user=request.user, classroom_id=classroom_id):
+        classroom = Classroom.objects.get(id=classroom_id)
         return render(request, 'blog/classroom.html', {'forums': get_forums(classroom), 'exams': get_exams(classroom)})
     else:
         messages.error(request, 'Sorry, We found out that you are not a member of the classroom!')
         return redirect('dashboard')
 
-def forum(request):
-    # todo: recover forum object from the request
-    forum = None
-    return render(request, 'blog/forum.html', {'posts': get_posts(forum)})
+@login_required()
+def forum(request, classroom_id, forum_id):
+    if match(user=request.user, classroom_id=classroom_id, forum_id=forum_id):
+        forum = get_forums(Classroom.objects.get(id=classroom_id)).get(id=forum_id)
+        print("we are here!")
+        return render(request, 'blog/forum.html', {'posts': get_posts(forum)})
+    else:
+        messages.error(request, 'Something went wrong!')
+        return redirect('dashboard')
 
 
 def exam(request):
