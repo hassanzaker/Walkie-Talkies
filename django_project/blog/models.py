@@ -24,7 +24,6 @@ class Grade(models.TextChoices):
     TWELVE_HUMANITIES = 'twelve humanities'
 
 class Classroom(models.Model):
-
     lesson = models.CharField(max_length=100)
     grade = models.CharField(max_length=100, choices=Grade.choices)
     class_num = models.IntegerField()
@@ -60,6 +59,7 @@ class Exam(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     exam_file = models.FileField()
+
     # mark of the students in this exam
     classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE)
 

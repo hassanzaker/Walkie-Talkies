@@ -28,9 +28,12 @@ def classroom(request, classroom_id):
 
 @login_required()
 def forum(request, classroom_id, forum_id):
+    if request.method == 'POST':
+        content = request.POST.get('content')
+        create_post(content, request.user, forum_id)
+
     if match(user=request.user, classroom_id=classroom_id, forum_id=forum_id):
         forum = get_forums(Classroom.objects.get(id=classroom_id)).get(id=forum_id)
-        print("we are here!")
         return render(request, 'blog/forum.html', {'posts': get_posts(forum)})
     else:
         messages.error(request, 'Something went wrong!')

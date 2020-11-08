@@ -21,10 +21,13 @@ def create_forum(title, classroom, description=None):
     forum.save()
 
 
-def create_post(content, author, forum):
-    post = Post(content=content, author=author, forum=forum)
-    # todo check some consistency to see if author is a member of the forum
-    post.save()
+def create_post(content, author, forum_id):
+    if match(user=author, forum_id=forum_id):
+        post = Post(content=content, author=author, forum=Forum.objects.get(id=forum_id))
+        post.save()
+        print("post created")
+    else:
+        print("some problem authenticating")
 
 
 def create_exam(title, exam_file, classroom, description=None):
@@ -35,7 +38,7 @@ def create_exam(title, exam_file, classroom, description=None):
     exam.save()
 
 
-# todo implement condition in which user is a teacher of admin. For now we assume user to be a student
+# todo implement condition in which user is a teacher or admin. For now we assume user to be a student
 def get_classrooms(user):
     return user.classrooms_as_student.all()
 
