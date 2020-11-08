@@ -1,0 +1,28 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    <!--  forums   -->
+    <h1> Forums </h1>
+    {% for forum in forums %}
+         <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{forum.title}}</a>
+            </div>
+          </div>
+        </article>
+    {% endfor %}
+    <!--    exams   -->
+    <h1> Exams </h1>
+    {% for exam in exams %}
+         <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{exam.title}}</a>
+            </div>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
+
+
+
