@@ -1,4 +1,19 @@
 {% extends "blog/base.html" %}
 {% block content %}
-    <h1>Join Classroom</h1>
+<h1>Join Classroom</h1>
+<br>
+<h4>click on class that you want to be added to</h4>
+{% for classroom in classrooms %}
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <form action="" method="post">
+                {% csrf_token %}
+                <button class="btn" name ="id" value="{{ classroom.id }}">{{ classroom.lesson }}
+                    {{classroom.grade}} {{classroom.class_num}}</button>
+            </form>
+        </div>
+    </div>
+</article>
+{% endfor %}
 {% endblock content %}

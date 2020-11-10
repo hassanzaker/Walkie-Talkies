@@ -56,10 +56,20 @@ def create_classroom(request):
 
 @login_required()
 def join_classroom(request):
-    if Profile.objects.get(user_id= request.user).type == 'student':
-        return render(request, 'blog/join_classroom.html', {})
+    if request.method == 'POST':
+        id = request.POST.get('id')
+        if request.user in Classroom.objects.get(id= id).students.all():
+            messages.error(request, 'you are already in this class!')
+            return redirect('dashboard')
+        else:
+            Classroom.objects.get(id=id).students.add(request.user)
+            messages.success(request, 'you have been successfully added!')
+            return redirect('dashboard')
     else:
-        return render(request, 'blog/404.html', {})
+        if Profile.objects.get(user_id= request.user).type == 'student':
+            return render(request, 'blog/join_classroom.html', {'classrooms': Classroom.objects.all()})
+        else:
+            return render(request, 'blog/404.html', {})
 
 
 
