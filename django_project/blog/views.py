@@ -45,7 +45,7 @@ def create_classroom(request):
             form.teacher = Profile.objects.get(user_id= request.user).user
             form.save()
             messages.success(request, f'Class has been created!')
-            return redirect('dashboard') # except dashboard it should redirect to class's page
+            return redirect('dashboard') #TODO except dashboard it should redirect to class's page
     else:
         form = ClassCreationForm()
     if Profile.objects.get(user_id= request.user).type == 'teacher':
@@ -60,11 +60,11 @@ def join_classroom(request):
         id = request.POST.get('id')
         if request.user in Classroom.objects.get(id= id).students.all():
             messages.error(request, 'you are already in this class!')
-            return redirect('dashboard')
+            return redirect('dashboard') #TODO except dashboard it should redirect to class's page
         else:
             Classroom.objects.get(id=id).students.add(request.user)
             messages.success(request, 'you have been successfully added!')
-            return redirect('dashboard')
+            return redirect('dashboard') #TODO except dashboard it should redirect to class's page
     else:
         if Profile.objects.get(user_id= request.user).type == 'student':
             return render(request, 'blog/join_classroom.html', {'classrooms': Classroom.objects.all()})
