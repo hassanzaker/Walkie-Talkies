@@ -8,6 +8,7 @@ from django.views.decorators.http import condition
 
 
 
+
 def home(request):
     return render(request, 'blog/home.html')
 
@@ -18,14 +19,8 @@ def about(request):
 
 @login_required()
 def dashboard(request):
-    # for now we assume the user is of type student and show his classes
-    if Profile.objects.get(user_id= request.user).type == 'teacher':
-        return render(request, 'blog/dashboard.html', {'classrooms': request.user.classrooms_as_teacher.all(),
-                                                       'type': Profile.objects.get(user_id=request.user).type})
-    elif Profile.objects.get(user_id= request.user).type == 'student' or True:
-        return render(request, 'blog/dashboard.html', {'classrooms': request.user.classrooms_as_student.all(),
-                                                   'type': Profile.objects.get(user_id= request.user).type})
-
+    return render(request, 'blog/dashboard.html', {'classrooms': get_classrooms(request.user),
+                                                   'type': Profile.objects.get(user_id=request.user).type})
 
 @login_required()
 def classroom(request, classroom_id):
@@ -35,6 +30,7 @@ def classroom(request, classroom_id):
     else:
         messages.error(request, 'Sorry, We found out that you are not a member of the classroom!')
         return redirect('dashboard')
+
 
 @login_required()
 def create_classroom(request):

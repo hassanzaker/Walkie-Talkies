@@ -1,4 +1,5 @@
 from ..models import Classroom, Forum, Post, Exam
+from users.models import Profile
 
 
 def create_new_classroom(lesson, grade, class_num, teacher, description=None):
@@ -38,9 +39,12 @@ def create_exam(title, exam_file, classroom, description=None):
     exam.save()
 
 
-# todo implement condition in which user is a teacher or admin. For now we assume user to be a student
 def get_classrooms(user):
-    return user.classrooms_as_student.all()
+    if Profile.objects.get(user_id=user).type == "teacher":
+        return user.classrooms_as_teacher.all()
+    else:
+        # student
+        return user.classrooms_as_student.all()
 
 
 def get_forums(classroom):
