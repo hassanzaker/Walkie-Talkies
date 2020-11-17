@@ -1,10 +1,10 @@
 {% extends "blog/base.html" %}
 {% block content %}
-    <h1>Create Classroom</h1>
-    <form method="POST">
+    <h1>Create Exam</h1>
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Class Details</legend>
+            <legend class="border-bottom mb-4">Exam Details</legend>
             {{ form.as_p }}
         </fieldset>
         <div class="form-group">

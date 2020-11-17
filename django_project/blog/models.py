@@ -58,10 +58,10 @@ class Post(models.Model):
 class Exam(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
-    exam_file = models.FileField()
+    exam_file = models.FileField(upload_to='documents/%Y/%m/%d/')
 
     # mark of the students in this exam
-    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE)
+    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.title

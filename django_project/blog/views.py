@@ -83,7 +83,25 @@ def forum(request, classroom_id, forum_id):
         return redirect('dashboard')
 
 
-def exam(request):
-    # todo: recover exam object from the request
+def create_exam(request, classroom_id):
+    if request.method == 'POST':
+        form = ExamCreationForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            # form = form.save()
+            # form.classroom = Classroom.objects.get(id=classroom_id)
+            # form.save()
+            messages.success(request, f'exam has been created!')
+            return redirect('dashboard')  # TODO except dashboard it should redirect to class's page
+    else:
+        form = ExamCreationForm()
+    if Profile.objects.get(user_id=request.user).type == 'teacher':
+        return render(request, 'blog/create_classroom.html', {'form': form})
+    else:
+        return render(request, 'blog/404.html', {})
+
+def exam_page(request):
     exam = None
     return render(request, 'blog/exam.html', {'exam': exam})
+
+

@@ -9,5 +9,5 @@ urlpatterns = [
     path('join_class/', views.join_classroom, name='join-classroom'),
     path('dashboard/classroom/<int:classroom_id>/', views.classroom, name='classroom'),
     path('dashboard/classroom/<int:classroom_id>/<int:forum_id>/', views.forum, name='forum'),
-
+    path('dashboard/classroom/<int:classroom_id>/create_exam', views.create_exam, name='exam')
 ]

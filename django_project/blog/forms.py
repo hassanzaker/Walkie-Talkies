@@ -8,3 +8,8 @@ class ClassCreationForm(ModelForm):
     class Meta:
         model = Classroom
         fields = ['lesson', 'grade', 'class_num', "description"]
+
+class ExamCreationForm(ModelForm):
+    class Meta:
+        model = Exam
+        fields = ['title', 'description', 'exam_file']
